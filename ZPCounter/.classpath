@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQL-JConnector"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDatePicker"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JMySQL"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JXL"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
