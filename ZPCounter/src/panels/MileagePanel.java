@@ -11,9 +11,11 @@ import frames.ZPCounter;
 
 public class MileagePanel extends SomePanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public MileagePanel(JFrame frm, Statement s) {
 		super(frm, s);
-		isReadyQuestionLabel.setText("Километраж:");
+		panelNameLabel.setText("Километраж:");
 	}
 
 	/*

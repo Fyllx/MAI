@@ -30,6 +30,7 @@ import additional.HintTextField;
 
 public class InsertingNewEmployeeDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private HintTextField employeeNameTextField;
 	private JComboBox<String> regionComboBox;

@@ -28,8 +28,9 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
 import javax.swing.text.BadLocationException;
 
-public class EmployeeDeletingDialog extends JDialog {
+public class DeleteEmployeeDialog extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private Statement s;
 	private TableModel tableModel;
@@ -42,7 +43,7 @@ public class EmployeeDeletingDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public EmployeeDeletingDialog(JFrame parent, Statement s) {
+	public DeleteEmployeeDialog(JFrame parent, Statement s) {
 		super(parent, true);
 		setLocationByPlatform(true);
 		this.s = s;
@@ -146,7 +147,7 @@ public class EmployeeDeletingDialog extends JDialog {
 
 				int id = res.getInt(1);
 				JButton deleteEmployee = new JButton("");
-				deleteEmployee.setIcon(new ImageIcon(EmployeeDeletingDialog.class
+				deleteEmployee.setIcon(new ImageIcon(DeleteEmployeeDialog.class
 						.getResource("/javax/swing/plaf/metal/icons/ocean/paletteClose-pressed.gif")));
 
 				deleteEmployee.addActionListener(event -> delete(id));

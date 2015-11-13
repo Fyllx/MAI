@@ -11,9 +11,11 @@ import frames.ZPCounter;
 
 public class TimesheetPanel extends SomePanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public TimesheetPanel(JFrame frm, Statement s) {
 		super(frm, s);
-		isReadyQuestionLabel.setText("Табель:");
+		panelNameLabel.setText("Табель:");
 	}
 	
 	@Override

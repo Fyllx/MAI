@@ -10,10 +10,12 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import frames.EmployeeDeletingDialog;
+import frames.DeleteEmployeeDialog;
 import frames.InsertingNewEmployeeDialog;
 
-public class StaffPanel extends JPanel {
+public class EmployeePanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 
 	private JButton insertNewEmployee;
 	private JButton deleteEmployee;
@@ -22,7 +24,7 @@ public class StaffPanel extends JPanel {
 	private JFrame parent;
 	private Statement s;
 	
-	public StaffPanel(JFrame frm, Statement s) {
+	public EmployeePanel(JFrame frm, Statement s) {
 		super();
 		this.s = s;
 		parent = frm;
@@ -44,21 +46,21 @@ public class StaffPanel extends JPanel {
 	}
 
 	private void insertNewEmployee() {
-		// TODO Auto-generated method stub
 		InsertingNewEmployeeDialog dialog = new InsertingNewEmployeeDialog(parent, s);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}
 
 	private void deleteEmployee() {
-		// TODO Auto-generated method stub
-		EmployeeDeletingDialog dialog = new EmployeeDeletingDialog(parent, s);
+		DeleteEmployeeDialog dialog = new DeleteEmployeeDialog(parent, s);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}
 
 	private void editEmployee() {
-		// TODO Auto-generated method stub
+//		InsertingNewEmployeeDialogMore dialog = new InsertingNewEmployeeDialogMore(parent, s);
+//		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//		dialog.setVisible(true);
 	}
 
 }

@@ -9,6 +9,9 @@ import java.awt.RenderingHints;
 import javax.swing.JTextField;
 
 public class HintTextField extends JTextField {
+
+	private static final long serialVersionUID = 1L;
+
 	public HintTextField(String hint) {
 		_hint = hint;
 	}

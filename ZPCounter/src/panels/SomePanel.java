@@ -1,6 +1,5 @@
 package panels;
 
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -14,11 +13,18 @@ import javax.swing.JPanel;
 
 public class SomePanel extends JPanel {
 
-	protected JLabel isReadyQuestionLabel;
+	private static final long serialVersionUID = 1L;
+
+	protected JLabel panelNameLabel;
 	protected JLabel isReadyLabel;
 	protected JButton watchResults;
 	protected JButton enterData;
 	protected Statement s;
+
+	static Color red = Color.red;
+	static Color dark_green = new Color(0, 125, 0);
+	protected String whenDoesntReady = "Нет", whenReady = "Есть";
+	protected boolean ready;
 
 	public SomePanel(JFrame frm, Statement s) {
 		super();
@@ -27,8 +33,8 @@ public class SomePanel extends JPanel {
 		frm.getContentPane().add(this);
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-		isReadyQuestionLabel = new JLabel("Something:");
-		this.add(isReadyQuestionLabel);
+		panelNameLabel = new JLabel("Something:");
+		this.add(panelNameLabel);
 
 		isReadyLabel = new JLabel();
 		this.add(isReadyLabel);
@@ -43,11 +49,6 @@ public class SomePanel extends JPanel {
 
 		setReady(false);
 	}
-
-	static Color red = Color.red;
-	static Color dark_green = new Color(0, 125, 0);
-	protected String whenDoesntReady = "Нет", whenReady = "Есть";
-	protected boolean ready;
 
 	protected void setReady(boolean ready) {
 		this.ready = ready;

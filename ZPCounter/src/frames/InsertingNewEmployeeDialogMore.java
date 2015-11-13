@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 public class InsertingNewEmployeeDialogMore extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField[] texts;
 	private JLabel[] labels;

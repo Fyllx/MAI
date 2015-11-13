@@ -3,7 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 
 public class Task
 {
@@ -59,7 +58,7 @@ public class Task
 				+ "beginContract DATE) "
 				+ "ENGINE=INNODB");
 		s.executeUpdate("INSERT INTO " + general_tab_name + "(name, region, city, isAutoExist, birthDate, beginWork, beginContract) "
-				+ "VALUES ('������ ���� ����������', 'omsk_reg', '����', true, '1983-06-23', '2015-01-21', '2015-01-22')");
+				+ "VALUES ('Ivanov Ivan Ivanovich', 'omsk_reg', 'Omsk', true, '1983-06-23', '2015-01-21', '2015-01-22')");
 		
 	}
 	

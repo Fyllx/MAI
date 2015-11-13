@@ -11,9 +11,11 @@ import frames.ZPCounter;
 
 public class ImagePanel extends SomePanel {
 
+	private static final long serialVersionUID = 1L;
+
 	public ImagePanel(JFrame frm, Statement s) {
 		super(frm, s);
-		isReadyQuestionLabel.setText("КТУ:");
+		panelNameLabel.setText("КТУ:");
 	}
 
 	@Override

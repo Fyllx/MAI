@@ -22,13 +22,23 @@ import javax.swing.JPasswordField;
 import panels.CalculationPanel;
 import panels.ImagePanel;
 import panels.MileagePanel;
-import panels.SomePanel;
-import panels.StaffPanel;
+import panels.EmployeePanel;
 import panels.TimesheetPanel;
 
 public class ZPCounter {
 
 	private JFrame frmZpcounter;
+	public static String db_name = "zp_data";
+	private Connection con;
+	private Statement s;
+
+	private JComboBox<Object> month;
+	private JComboBox<Object> year;
+
+	private CalculationPanel calculation;
+	private MileagePanel mileage;
+	private ImagePanel image;
+	private TimesheetPanel timesheet;
 
 	/**
 	 * Launch the application.
@@ -72,64 +82,34 @@ public class ZPCounter {
 		initialize();
 	}
 
-	public static String db_name = "zp_data";
-	private Connection con;
-	private Statement s;
-
-	private JComboBox month;
-	private JComboBox year;
-
-	private CalculationPanel calculation;
-	private MileagePanel mileage;
-	private ImagePanel image;
-	private TimesheetPanel timesheet;
-	private StaffPanel staff;
-	private SomePanel[] panels;
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frmZpcounter = new JFrame();
-		frmZpcounter.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				int reply = JOptionPane.showConfirmDialog(frmZpcounter, "Завершить работу приложения?", "",
-						JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION) {
-					frmZpcounter.dispose();
-					try {
-						con.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					System.exit(0);
-				}
-			}
-		});
+		frmZpcounter.addWindowListener(newListner());
+		frmZpcounter.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);		
 		frmZpcounter.setTitle("ZPCounter");
 		frmZpcounter.setLocationByPlatform(true);
-		frmZpcounter.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmZpcounter.getContentPane().setLayout(new BoxLayout(frmZpcounter.getContentPane(), BoxLayout.Y_AXIS));
 
 		JPanel date = new JPanel();
 		date.setAlignmentX(Component.LEFT_ALIGNMENT);
 		frmZpcounter.getContentPane().add(date);
 
-		month = new JComboBox();
+		month = new JComboBox<Object>();
 		month.setAlignmentY(Component.TOP_ALIGNMENT);
 		month.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		month.setMaximumRowCount(13);
-		month.setModel(new DefaultComboBoxModel(new String[] { "Месяц", "Январь", "Февраль", "Март", "Апрель", "Май",
+		month.setModel(new DefaultComboBoxModel<Object>(new String[] { "Месяц", "Январь", "Февраль", "Март", "Апрель", "Май",
 				"Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" }));
 		month.addItemListener(itemEvent -> updateFrame(itemEvent));
 
-		year = new JComboBox();
+		year = new JComboBox<Object>();
 		year.setAlignmentY(Component.TOP_ALIGNMENT);
 		year.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		year.setModel(new DefaultComboBoxModel(
-				new String[] { "Год", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021" }));
+		year.setModel(new DefaultComboBoxModel<Object>(new String[] { "Год", "2013", "2014", "2015", "2016", "2017", "2018",
+				"2019", "2020", "2021" }));
 		year.addItemListener(itemEvent -> updateFrame(itemEvent));
 
 		date.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -140,22 +120,43 @@ public class ZPCounter {
 		mileage = new MileagePanel(frmZpcounter, s);
 		image = new ImagePanel(frmZpcounter, s);
 		timesheet = new TimesheetPanel(frmZpcounter, s);
-		panels = new SomePanel[] { calculation, mileage, image, timesheet };
-		staff = new StaffPanel(frmZpcounter, s);
+		//SomePanel[] panels = new SomePanel[] { calculation, mileage, image, timesheet };
+		new EmployeePanel(frmZpcounter, s);
 
 		frmZpcounter.pack();
+	}
+	
+	private WindowAdapter newListner(){
+		WindowAdapter l = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				int reply = JOptionPane.showConfirmDialog(frmZpcounter, "Завершить работу приложения?", "",
+						JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					frmZpcounter.dispose();
+					try {
+						con.close();
+					} catch (SQLException e) {
+						JOptionPane.showMessageDialog(frmZpcounter, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
+					}
+					System.exit(0);
+				}
+			}
+		};
+		return l;
 	}
 
 	private void updateFrame(ItemEvent itemEvent) {
 
 		if (itemEvent.getStateChange() != ItemEvent.SELECTED)
 			return;
-		// TODO
+
 		int monthNumber = month.getSelectedIndex();
 		int yearNumber = year.getSelectedIndex();
-		if (monthNumber == 0 || yearNumber == 0) {
+		if (monthNumber == 0 || yearNumber == 0)
 			return;
-		}
+
 		yearNumber += 2012;
 
 		try {
@@ -163,7 +164,7 @@ public class ZPCounter {
 			image.updateAll(monthNumber, yearNumber);
 			timesheet.updateAll(monthNumber, yearNumber);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(frmZpcounter, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		calculation.updateAll(monthNumber, yearNumber, mileage, image, timesheet, s);
