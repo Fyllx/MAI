@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<table type="schedule" comment="табель" dtCreate="08.10.2015 12:30" dtBegin="28.09.2015" dtFinish="04.10.2015">
+    <user>
+        <fio>Константинов Г. В.</fio>
+        <dates>
+            <dt date="28.09.2015" workedHours="8" dayOff="0" duty="1" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="29.09.2015" workedHours="8" dayOff="0" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="30.09.2015" workedHours="10.5" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="01.10.2015" workedHours="9" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="02.10.2015" workedHours="8.58" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="03.10.2015" workedHours="2.25" dayOff="1" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="04.10.2015" workedHours="0.75" dayOff="1" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+        </dates>
+    </user>
+    <user>
+        <fio>Кухаренок С. Б.</fio>
+        <dates>
+            <dt date="28.09.2015" workedHours="8" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="31.0"/>
+            <dt date="29.09.2015" workedHours="8.92" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="39.1"/>
+            <dt date="30.09.2015" workedHours="8" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="41.5"/>
+            <dt date="01.10.2015" workedHours="8.33" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="52.4"/>
+            <dt date="02.10.2015" workedHours="10.17" dayOff="0" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="171.5"/>
+            <dt date="03.10.2015" workedHours="" dayOff="1" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+            <dt date="04.10.2015" workedHours="" dayOff="1" duty="0" dutyGph="0" reserv="0" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance=""/>
+        </dates>
+    </user>
+    <user>
+        <fio>Логинов А. В.</fio>
+        <dates>
+            <dt date="28.09.2015" workedHours="9.67" dayOff="0" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="278.0"/>
+            <dt date="29.09.2015" workedHours="11.17" dayOff="0" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="484.2"/>
+            <dt date="30.09.2015" workedHours="8" dayOff="0" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="178.1"/>
+            <dt date="01.10.2015" workedHours="8.67" dayOff="0" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="409.5"/>
+            <dt date="02.10.2015" workedHours="10.75" dayOff="0" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="432.2"/>
+            <dt date="03.10.2015" workedHours="9" dayOff="1" duty="0" dutyGph="0" reserv="1" reserv2="0" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="413.0"/>
+            <dt date="04.10.2015" workedHours="4.55" dayOff="1" duty="0" dutyGph="0" reserv="0" reserv2="1" avtoDay="0" businessTrip="0" sick="0" vacation="0" vacationWoPay="0" vacationStudent="0" distance="354.0"/>
+        </dates>
+    </user>
+</table>

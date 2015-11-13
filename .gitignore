@@ -2,3 +2,5 @@
 ExcelReader/.classpath
 *.project
 ExcelReader/.settings/org.eclipse.jdt.core.prefs
+parse_XML/.classpath
+*.prefs
