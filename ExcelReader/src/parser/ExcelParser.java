@@ -12,34 +12,54 @@ import jxl.read.biff.BiffException;
 
 public class ExcelParser
 {
-	public Connection con;
-	public String db_name;
-	public String [] fio;
-	public Double [] [] dataTable;
+	Statement s;
+	String [][] table;
+	int col_len = 0;
+	int row_len = 0;
+	Connection con;
+	String database_name;
+	//DB field's names for easier renaming if it needs  
+	String worker_general_data = "worker_general_data";
+	String worker_default_values = "worker_default_values";
+	String name = "name";
+	String region = "region";
+	String city = "city";
+	String birthDate = "birthDate";
+	String beginWork = "beginWork";
+	String finishWork = "finishWork";
+	String beginContract = "beginContract";
 	
-	public ExcelParser(Connection connect, String database_name)
+//	public String [] fio;
+//	public Double [] [] dataTable;
+	
+	public ExcelParser(Connection connect, String database_name) throws SQLException
 	{
-		con = connect;
-		db_name = database_name;
+		con=connect;
+		this.database_name=database_name;
 	}
 
-	public boolean parseWorkerGeneralDataTable(String fileName){			
+	public boolean parseAll(String fileName, int tabNum)
+	{
 		try
 		{
+			// общее чтение из Excel для всех таблиц
 			Sheet sheet=null;
-			File excelKm = new File (fileName);
+			File excelFile = new File (fileName);
 			Workbook workbook;
-			workbook = Workbook.getWorkbook(excelKm);
+			workbook = Workbook.getWorkbook(excelFile);
 			sheet = workbook.getSheet(0);
 			
 			// in first raw in table ((0,0) and (1,0)cells) should be written number of columns
 			// and number of raws
-			int col_len = Integer.parseInt(sheet.getCell(0,0).getContents())+1;
-			int row_len = Integer.parseInt(sheet.getCell(1,0).getContents());
+			col_len = Integer.parseInt(sheet.getCell(0,0).getContents())+1;
+			row_len = Integer.parseInt(sheet.getCell(1,0).getContents());
 			String name;
-			String [][] table = new String[col_len][row_len];
-			Statement s = con.createStatement();
-			s.executeUpdate("USE "+this.db_name);
+			table = new String[col_len][row_len];
+			
+			s = con.createStatement();
+			s.executeUpdate("USE "+database_name);
+			
+			//reading from Excel file
 			for (int i=1; i<=col_len; i++)
 			{
 				name = gapRemove(sheet.getCell(1,i).getContents());
@@ -56,48 +76,27 @@ public class ExcelParser
 					}
 				}				
 			}
-			for (int i=1; i<col_len; i++)
-			{
-				String req = "worker_general_data SET";
-				for (int j=0; j<row_len; j++)
-				{
-					if (table[i][j]==null) continue;
-					if (table[0][j].contentEquals("name") || table[0][j].contentEquals("region") || table[0][j].contentEquals("city")){
-						req += " " + table[0][j] + "='" + table[i][j] + "',";
-					}
-					else if (table[0][j].contentEquals("birthDate") || table[0][j].contentEquals("beginWork") 
-							|| table[0][j].contentEquals("finishWork") || table[0][j].contentEquals("beginContract")){
-						req += " " + table[0][j] + "='" + convertData(table[i][j]) + "',";
-					}
-					else {
-						req += " " + table[0][j] + "=" + table[i][j] + ",";
-					}
-				}
-				req = req.substring(0, req.length()-1);
 
-				 //пишем в базу проверяем по имени соответствие. если не совпадает, то выводим на экран ошибку
-			    ResultSet queryRes = s.executeQuery("SELECT (workerID) FROM worker_general_data where name='" + table[i][0] + "'");
-			    System.out.println(req);
-			    if (queryRes.next() && queryRes.isLast())
-			    {
-			    	s.executeUpdate( "REPLACE " + req + ", workerID="+queryRes.getString(1));
-			    }
-			    else if(!queryRes.first()) {
-			    	s.executeUpdate( "INSERT INTO " + req);
-			    }
-			    else
-			    {
-			    	System.out.println("Name " + table[i][0] + " is not unique.");
-					return false;
-			    }	
+			//запись в БД для каждой таблицы своя
+			if (tabNum==1){
+				return parseWorkerGeneralDataTable();
+			}
+			else if (tabNum==2){
+				return parseDefaultValuesTable();
+			}
+			else {
+				System.out.println("Not correct number of operation! tabNum=" + tabNum);
+				return false;
 			}
 		}
 		catch(IOException ex){
 			System.out.println("Ops, IOException: "+ex.getMessage()+" Sorry...");
+			ex.printStackTrace();
 			return false;
 		}
 		catch(BiffException bex){
 			System.out.println("Ops, BiffException: "+bex.getMessage()+" Sorry...");
+			bex.printStackTrace();
 			return false;
 		}
 		catch(java.lang.ArrayIndexOutOfBoundsException arrex){
@@ -107,7 +106,98 @@ public class ExcelParser
 		} catch (SQLException e)
 		{
 			System.out.println("Ops, SQLException: "+e.getMessage()+" Sorry...");
+			e.printStackTrace();
 			return false;
+		}
+	}
+
+	public boolean parseWorkerGeneralDataTable() throws SQLException
+	{
+		//writing into DB
+		for (int i=1; i<col_len; i++)
+		{
+			//generation of SQL request 
+			String req = worker_general_data + " SET";
+			for (int j=0; j<row_len; j++)
+			{
+				if (table[i][j]==null) continue;
+				if (table[0][j].contentEquals(name) || table[0][j].contentEquals(region) || table[0][j].contentEquals(city)){
+					req += " " + table[0][j] + "='" + table[i][j] + "',";
+				}
+				else if (table[0][j].contentEquals(birthDate) || table[0][j].contentEquals(beginWork) 
+						|| table[0][j].contentEquals(finishWork) || table[0][j].contentEquals(beginContract)){
+					req += " " + table[0][j] + "='" + convertData(table[i][j]) + "',";
+				}
+				else {
+					req += " " + table[0][j] + "=" + table[i][j] + ",";
+				}
+			}
+			req = req.substring(0, req.length()-1);
+			
+			//Checks if such name already exist in DB, then call "REPLACE" request. Otherwise call "INSERT" request.
+		    ResultSet queryRes = s.executeQuery("SELECT (workerID) FROM " + worker_general_data + " where name='" + table[i][0] + "'");
+		    System.out.println(req);
+		    if(!queryRes.first()) {
+		    	s.executeUpdate( "INSERT INTO " + req);
+		    }
+		    else if (queryRes.isLast())
+		    {
+		    	s.executeUpdate( "REPLACE " + req + ", workerID="+queryRes.getString(1));
+		    }
+		    else
+		    {
+		    	throw new Error("Name " + table[i][0] + " is not unique.");
+		    }
+		}
+		return true;
+	}
+
+	public boolean parseDefaultValuesTable() throws SQLException
+	{
+		//writing into DB default_values table
+		for (int i=1; i<col_len; i++)
+		{
+			//generation of SQL request 
+			String req = worker_default_values + " SET";
+			for (int j=1; j<row_len; j++)
+			{
+				if (table[i][j]==null) continue;
+				String []a = table[i][j].trim().split("\\,");
+				String number = a[0];
+				if (a.length>1) number += "." + a[1];
+				Double num = Double.parseDouble(number);
+				num = num*1000;
+				req += " " + table[0][j] + "=" + num.intValue() + ",";
+			}
+			req = req.substring(0, req.length()-1);
+			
+			//Checks if such name already exist in DB, then call "REPLACE" request. Otherwise call "INSERT" request.
+		    ResultSet queryRes = s.executeQuery("SELECT (workerID) FROM " + worker_general_data + " where name='" + table[i][0] + "'");
+		    System.out.println(req);
+		    if(!queryRes.first()) {
+		    	throw new Error("There is no worker with name: " + table[i][0] 
+		    			+ " in worker_general_data table, so it couldn't be writen into table worker_default_values.");
+		    }
+		    else if (queryRes.isLast())
+		    {
+		    	String workerId = queryRes.getString(1);
+		    	ResultSet queryRes2 = s.executeQuery("SELECT * FROM " + worker_default_values + " where workerID='" + workerId + "'");
+		    	 if(!queryRes2.first()) {
+			    	s.executeUpdate( "INSERT INTO " + req + ", workerID="+workerId);
+			    }
+			    else if (queryRes2.isLast())
+			    {
+			    	s.executeUpdate( "REPLACE " + req + ", workerID="+workerId);
+			    }
+			    else
+			    {
+			    	throw new Error("Name " + table[i][0] + " is not unique in worker_default_values table.");
+			    }
+		    }
+		    else
+		    {
+		    	throw new Error("Name " + table[i][0] + " is not unique in worker_general_data table.");
+		    }
 		}
 		return true;
 	}
@@ -182,53 +272,8 @@ public class ExcelParser
 //		
 //		return true;
 //	}
-	
-//	public boolean parseNamesTable(String fileName){			
-//		try
-//		{
-//			Sheet sheet=null;
-//			File excelNames = new File (fileName);
-//			Workbook workbook;
-//			workbook = Workbook.getWorkbook(excelNames);
-//			sheet = workbook.getSheet(0);
-//			
-//			int col_len = sheet.getColumn(0).length-17;
-//			String name;
-//			Statement s = con.createStatement();
-//			s.executeUpdate("USE "+this.db_name);
-//			for (int i=3; i<col_len; i++)
-//			{
-//				name = gapRemove(sheet.getCell(1,i).getContents());
-//				
-//				if (name=="") continue;
-//			    ResultSet queryRes = s.executeQuery("SELECT (workerID) FROM worker_general_data where name='"+name+"'");
-//			    if (!queryRes.first()){
-//			    	s.executeUpdate("INSERT INTO worker_general_data (name) "
-//			    			+ "VALUES ('" + name + "')");
-//			    }
-//			}
-//			workbook.close();
-//		}
-//		catch(IOException ex){
-//			System.out.println("Ops, IOException: "+ex.getMessage()+" Sorry...");
-//			return false;
-//		}
-//		catch(BiffException bex){
-//			System.out.println("Ops, BiffException: "+bex.getMessage()+" Sorry...");
-//			return false;
-//		}
-//		catch(java.lang.ArrayIndexOutOfBoundsException arrex){
-//			System.out.println("Ops, ArrayIndexOutOfBoundsException: "+arrex.getMessage()+" Sorry...");
-//			return false;
-//		} catch (SQLException e)
-//		{
-//			System.out.println("Ops, SQLException: "+e.getMessage()+" Sorry...");
-//			return false;
-//		}
-//		return true;
-//	}
-	
-	public String gapRemove(String oldName){
+
+	private String gapRemove(String oldName){
 		String convertedName="";
 		String []a = oldName.trim().split("\\s+");
 		for (int i=0; i<a.length-1; i++)
@@ -238,8 +283,8 @@ public class ExcelParser
 		convertedName+=a[a.length-1];
 		return convertedName;
 	}
-	
-	public String convertData(String oldData){
+
+	private String convertData(String oldData){
 		String convertedData="";
 		if (oldData==null) return "";
 		String []a = oldData.trim().split("\\.");
@@ -251,6 +296,5 @@ public class ExcelParser
 		convertedData+=a[0];
 		return convertedData;
 	}
-
 
 }

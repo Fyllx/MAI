@@ -69,7 +69,7 @@ public class Task
 				" (workerID MEDIUMINT NOT NULL PRIMARY KEY, "
 				+ "salary DECIMAL(7,0) DEFAULT 8000, "// оклад
 				+ "prepayment DECIMAL(7,0) DEFAULT 4000, "// аванс
-				+ "zp DECIMAL(7,0) DEFAULT 15000, "// ЗП do we need this?
+				+ "zp DECIMAL(7,0) DEFAULT 22000, "// ЗП do we need this?
 				+ "carRent DECIMAL(5,0) DEFAULT 2000, "// аренда авто
 				+ "ktuStartMoney DECIMAL(6,0) DEFAULT 6000, "//КТУ деньги
 				+ "kmStartMoney DECIMAL(6,0) DEFAULT 4000, "//км деньги

@@ -16,9 +16,8 @@ public class Task {
 			con = DriverManager.getConnection("jdbc:mysql://localhost/?" + "user=root&password=1288"
 		+"&characterEncoding=utf8");
 			ExcelParser pars = new ExcelParser(con, db_name);
-	//		if (pars.parseNamesTable("../K_02_15.xls"))
-	//		if (pars.parseKmTable("../K_02_15.xls","2015-02-03")) // name of the file take from frontEnd
-			if (pars.parseWorkerGeneralDataTable("general_data.xls"))
+			if (pars.parseAll("general_data.xls", 1))
+			//if (pars.parseAll("default_values.xls", 2))
 			{
 				System.out.println("Excel file successfuly parsed and writen into database!");
 			}
