@@ -55,7 +55,7 @@ public class TableNode {
 			}
 		}
 		else {
-            throw new Exception("Uncnown table name found. Parsing can't be finished.");
+            throw new Exception("Uncnown table name found: " + tableName + ". Parsing can't be finished.");
         }
     }
 

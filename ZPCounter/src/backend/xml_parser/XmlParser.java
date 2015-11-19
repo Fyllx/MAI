@@ -8,6 +8,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+//Creates DOM object from XML document.
+//Parameter of class TableNode contains all information from parsed document.
+
+//*** Needs to do validation of parsed data. ***//
+
 public class XmlParser
 {
 	private TableNode tabNode = null;

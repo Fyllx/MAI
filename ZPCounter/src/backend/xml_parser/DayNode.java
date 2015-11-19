@@ -28,11 +28,11 @@ public class DayNode {
 		date = node.getAttributes().getNamedItem("date").getNodeValue().trim();
 		workedHours = getDoubleAttribute("workedHours");
 		if (workedHours >= 24.0){
-            throw new Exception("More than 24h Worked Hours in one day.");
+            throw new Exception("More than 24h Worked Hours in one day: " + workedHours);
 		}
 		distance = getDoubleAttribute("distance");
 		if (distance >= 3000.0){
-            throw new Exception("More than 3000km Dictanse in one day.");
+            throw new Exception("More than 3000km Dictanse in one day:" + distance);
 		}
 		dayOff = getBoolAttribute("dayOff");
 		duty8h = getBoolAttribute("duty");
