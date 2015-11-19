@@ -50,7 +50,7 @@ public class DayNode {
 	}
 	
 	private Boolean getBoolAttribute(String name){
-		String atr = node.getAttributes().getNamedItem(name).getNodeValue();
+		String atr = node.getAttributes().getNamedItem(name).getNodeValue().trim();
 		Boolean boolAtr;
 		if (atr.startsWith("1")){
 			boolAtr = true;

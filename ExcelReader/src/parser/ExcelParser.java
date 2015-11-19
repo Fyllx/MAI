@@ -108,10 +108,15 @@ public class ExcelParser
 			System.out.println("Ops, SQLException: "+e.getMessage()+" Sorry...");
 			e.printStackTrace();
 			return false;
+		} catch (Exception ex)
+		{
+			System.out.println("Ops, some Exception: "+ex.getMessage()+" Sorry...");
+			ex.printStackTrace();
+			return false;
 		}
 	}
 
-	public boolean parseWorkerGeneralDataTable() throws SQLException
+	public boolean parseWorkerGeneralDataTable() throws Exception
 	{
 		//writing into DB
 		for (int i=1; i<col_len; i++)
@@ -146,13 +151,14 @@ public class ExcelParser
 		    }
 		    else
 		    {
-		    	throw new Error("Name " + table[i][0] + " is not unique.");
+		    	throw new Exception("Name " + table[i][0] + " is not unique.");
 		    }
+		    queryRes.close();
 		}
 		return true;
 	}
 
-	public boolean parseDefaultValuesTable() throws SQLException
+	public boolean parseDefaultValuesTable() throws Exception
 	{
 		//writing into DB default_values table
 		for (int i=1; i<col_len; i++)
@@ -175,12 +181,14 @@ public class ExcelParser
 		    ResultSet queryRes = s.executeQuery("SELECT (workerID) FROM " + worker_general_data + " where name='" + table[i][0] + "'");
 		    System.out.println(req);
 		    if(!queryRes.first()) {
-		    	throw new Error("There is no worker with name: " + table[i][0] 
+		    	queryRes.close();
+		    	throw new Exception("There is no worker with name: " + table[i][0] 
 		    			+ " in worker_general_data table, so it couldn't be writen into table worker_default_values.");
 		    }
 		    else if (queryRes.isLast())
 		    {
 		    	String workerId = queryRes.getString(1);
+		    	queryRes.close();
 		    	ResultSet queryRes2 = s.executeQuery("SELECT * FROM " + worker_default_values + " where workerID='" + workerId + "'");
 		    	 if(!queryRes2.first()) {
 			    	s.executeUpdate( "INSERT INTO " + req + ", workerID="+workerId);
@@ -191,12 +199,13 @@ public class ExcelParser
 			    }
 			    else
 			    {
-			    	throw new Error("Name " + table[i][0] + " is not unique in worker_default_values table.");
+			    	throw new Exception("Name " + table[i][0] + " is not unique in worker_default_values table.");
 			    }
+		    	queryRes2.close();
 		    }
 		    else
 		    {
-		    	throw new Error("Name " + table[i][0] + " is not unique in worker_general_data table.");
+		    	throw new Exception("Name " + table[i][0] + " is not unique in worker_general_data table.");
 		    }
 		}
 		return true;

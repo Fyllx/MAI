@@ -5,3 +5,4 @@ ExcelReader/.settings/org.eclipse.jdt.core.prefs
 parse_XML/.classpath
 *.prefs
 DatabaseCreator/bin/Task.class
+*.xml

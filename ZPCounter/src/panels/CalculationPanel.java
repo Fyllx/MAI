@@ -26,4 +26,9 @@ public class CalculationPanel extends SomePanel {
 		setCalcEnabled((mileage.isReady() && image.isReady() && timesheet.isReady()));
 	}
 
+	protected boolean enterData() {
+		// calculations
+		return true;
+	}
+
 }

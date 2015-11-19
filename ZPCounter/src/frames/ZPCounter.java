@@ -120,7 +120,6 @@ public class ZPCounter {
 		mileage = new MileagePanel(frmZpcounter, s);
 		image = new ImagePanel(frmZpcounter, s);
 		timesheet = new TimesheetPanel(frmZpcounter, s);
-		//SomePanel[] panels = new SomePanel[] { calculation, mileage, image, timesheet };
 		new EmployeePanel(frmZpcounter, s);
 
 		frmZpcounter.pack();
