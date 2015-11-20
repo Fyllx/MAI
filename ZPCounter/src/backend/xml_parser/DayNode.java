@@ -8,17 +8,17 @@ public class DayNode {
 	public String date = "";
 	public Double workedHours = 0.0;
 	public Double distance = 0.0;
-	public Boolean dayOff = false;
-	public Boolean duty8h = false;
-	public Boolean dutyGPH = false;
-	public Boolean duty500 = false;
-	public Boolean duty250 = false;
-	public Boolean avtoDay = false;
-	public Boolean businessTrip = false;
-	public Boolean sick = false;
-	public Boolean vacation = false;
-	public Boolean vacationWoPay = false;
-	public Boolean vacationStudent = false;
+	public int dayOff = 0;
+	public int duty8h = 0;
+	public int dutyGPH = 0;
+	public int duty500 = 0;
+	public int duty250 = 0;
+	public int avtoDay = 0;
+	public int businessTrip = 0;
+	public int sick = 0;
+	public int vacation = 0;
+	public int vacationWoPay = 0;
+	public int vacationStudent = 0;
 
 	public DayNode(Node node) {
 	    this.node = node;
@@ -47,11 +47,11 @@ public class DayNode {
 		vacationStudent = getBoolAttribute("vacationStudent");
 	}
 	
-	private Boolean getBoolAttribute(String name){
+	private int getBoolAttribute(String name){
 		String atr = node.getAttributes().getNamedItem(name).getNodeValue().trim();
-		Boolean boolAtr = false;
+		int boolAtr = 0;
 		if (atr.startsWith("1")){
-			boolAtr = true;
+			boolAtr = 1;
 		}
 		return boolAtr;
 	}

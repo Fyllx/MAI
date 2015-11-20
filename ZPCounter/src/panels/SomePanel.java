@@ -129,11 +129,12 @@ public class SomePanel extends JPanel {
 		String convertedData="";
 		if (oldData==null) return "";
 		String []a = oldData.trim().split("\\.");
-		for (int i=0; i<a.length-1; i++)
+		int len = a.length-1;
+		for (int i=0; i<len; i++)
 		{
-			convertedData+=a[i]+"-";
+			convertedData+=a[len-i]+"-";
 		}
-		convertedData+=a[a.length-1];
+		convertedData+=a[0];
 		return convertedData;
 	}
 	

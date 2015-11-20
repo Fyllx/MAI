@@ -148,6 +148,8 @@ public class Task
 				+ "dayMonthYear DATE, "
 				+ "workedHours DECIMAL(5,2), "
 				+ "isVacation BOOLEAN DEFAULT FALSE, "
+				+ "isVacationWoPay BOOLEAN DEFAULT FALSE, "
+				+ "isVacationStudent BOOLEAN DEFAULT FALSE, "
 				+ "isIll BOOLEAN DEFAULT FALSE, "
 				+ "isAutoDay BOOLEAN DEFAULT FALSE, "
 				+ "isBusinessTrip BOOLEAN DEFAULT FALSE, "//командировка

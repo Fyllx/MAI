@@ -31,12 +31,18 @@ public class MileagePanel extends SomePanel {
 	@Override
 	public void updateAll(int monthNumber, int yearNumber) throws SQLException {
 		super.updateAll(monthNumber, yearNumber);
+		if (monthNumber == 0 || yearNumber == 2012) {
+			setReady(false);
+			return;
+		}
 		ResultSet res = s.executeQuery("SELECT * FROM " + ZPCounter.db_name + ".km " + "WHERE YEAR(monthYear) = "
 				+ yearNumber + " AND MONTH(monthYear) = " + monthNumber + ";");
 		setReady(res.next());
 		res.close();
 	}
 
+	//read from XML and write into database KTU data. If in this month data already exist, 
+	// it will be rewritten.
 	protected boolean enterData() {
 		if ( ! super.enterData() ) return false;
 		try{

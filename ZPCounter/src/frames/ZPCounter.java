@@ -153,8 +153,6 @@ public class ZPCounter {
 
 		int monthNumber = month.getSelectedIndex();
 		int yearNumber = year.getSelectedIndex();
-		if (monthNumber == 0 || yearNumber == 0)
-			return;
 
 		yearNumber += 2012;
 
